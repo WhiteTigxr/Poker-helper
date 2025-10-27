@@ -135,14 +135,21 @@ select.form-control {
     background-color: #00d1a7;
 }
 
+/* --- Helper Class --- */
+.hidden {
+    display: none;
+}
+
 /* --- Range Chart --- */
 .range-controls {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 15px;
     margin-bottom: 10px;
 }
 .range-controls .form-group {
     flex-grow: 1;
+    margin-bottom: 0; /* Remove margin for grid layout */
 }
 
 /* Legend */
@@ -219,6 +226,49 @@ select.form-control {
 .result-box-fold { color: var(--color-fold); }
 .result-box-raise { color: var(--color-limp); }
 
+.outs-percent {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--color-raise);
+    margin: 5px 0 15px 0; /* ปรับ margin */
+}
+.outs-percent-label {
+    font-size: 1.1em;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 0;
+}
+
+/* (ใหม่) Outs Guide */
+.outs-guide {
+    background-color: var(--bg-dark-tertiary);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 6px;
+    margin-top: 25px;
+}
+.outs-guide h3 {
+    margin-top: 0;
+    color: var(--color-limp);
+}
+.outs-guide ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.outs-guide li {
+    font-size: 1.1em;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.outs-guide li:last-child {
+    border-bottom: none;
+}
+.outs-guide li strong {
+    color: var(--text-primary);
+}
+
+
 .warning-box {
     background-color: #fff3cd;
     color: #664d03;
@@ -233,7 +283,11 @@ select.form-control {
 /* Responsive */
 @media (max-width: 768px) {
     .range-controls {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .range-controls .form-group {
+        margin-bottom: 15px;
     }
     .tab-link {
         font-size: 0.9em;

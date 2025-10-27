@@ -1,108 +1,164 @@
 <!DOCTYPE html>
 <html lang="th">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tournament Poker Charts</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
     <div class="container">
-      <header>
-        <h1>Tournament Poker Charts</h1>
-      </header>
+        <header>
+            <h1>Tournament Poker Charts (9-Max / 6-Max)</h1>
+        </header>
 
-      <div class="warning-box"><strong>Credit by:</strong> Litice <br /></div>
+        <nav class="tab-nav">
+            <button class="tab-link active" data-tab="tab-charts">Range Charts (RFI / Defend)</button>
+            <button class="tab-link" data-tab="tab-push-fold">Push/Fold Helper</button>
+            <button class="tab-link" data-tab="tab-outs">Draw Equity Calculator</button>
+        </nav>
 
-      <nav class="tab-nav">
-        <button class="tab-link active" data-tab="tab-charts">
-          Range Charts (RFI)
-        </button>
-        <button class="tab-link" data-tab="tab-push-fold">
-          Push/Fold Helper
-        </button>
-      </nav>
+        <div id="tab-charts" class="tab-content active">
+            <h2>9-Max / 6-Max Range Charts</h2>
+            <p>เลือกรูปแบบ, Stage, และ Position เพื่อดู Range (RFI หรือ BB Defense)</p>
+            
+            <div class="range-controls">
+                <div class="form-group">
+                    <label for="chart-format">Format</label>
+                    <select id="chart-format" class="form-control">
+                        <option value="9max">9-Max</option>
+                        <option value="6max">6-Max</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="chart-stage">Stage (Stack Size)</label>
+                    <select id="chart-stage" class="form-control">
+                        <option value="deep">Deep (80bb+)</option>
+                        <option value="middle">Middle ( <60bb )</option>
+                        <option value="late">Late ( <40bb )</option>
+                        <option value="low">Low ( <25bb )</option>
+                        <option value="pushfold">Push/Fold ( <15bb )</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="position-select-9max">Position</label>
+                <select id="position-select-9max" class="form-control position-select">
+                    <option value="utg">UTG</option>
+                    <option value="utg1">UTG+1</option>
+                    <option value="mp">MP</option>
+                    <option value="lj">LJ</option>
+                    <option value="hj">HJ</option>
+                    <option value="co">CO</option>
+                    <option value="btn">BTN</option>
+                    <option value="sb">SB</option>
+                    <option value="bb">BB (vs SB Open)</option>
+                </select>
+                <select id="position-select-6max" class="form-control position-select hidden">
+                    <option value="utg">UTG</option>
+                    <option value="mp">MP</option>
+                    <option value="co">CO</option>
+                    <option value="btn">BTN</option>
+                    <option value="sb">SB</option>
+                    <option value="bb">BB (vs SB Open)</option>
+                </select>
+            </div>
+            
+            <div id="chart-legend" class="legend">
+                </div>
 
-      <div id="tab-charts" class="tab-content active">
-        <h2>9-Max Range Charts (Raise First In)</h2>
+            <div id="range-chart-container">
+                <h3 id="chart-title">Range: Deep (80bb+) - 9-Max - UTG</h3>
+                <table id="range-grid" class="range-table">
+                    </table>
+            </div>
 
-        <div class="range-controls">
-          <div class="form-group">
-            <label for="chart-stage">Stage (Stack Size)</label>
-            <select id="chart-stage" class="form-control">
-              <option value="deep">Deep ( 80bb+ )</option>
-              <option value="middle">Middle ( <60bb )</option>
-              <option value="late">Late ( <40bb )</option>
-              <option value="low">Low ( <25bb )</option>
-              <option value="pushfold">Push/Fold ( <15bb )</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="chart-position">Position</label>
-            <select id="chart-position" class="form-control">
-              <option value="utg">UTG</option>
-              <option value="utg1">UTG+1</option>
-              <option value="mp">MP</option>
-              <option value="lj">LJ</option>
-              <option value="hj">HJ</option>
-              <option value="co">CO</option>
-              <option value="btn">BTN</option>
-              <option value="sb">SB</option>
-            </select>
-          </div>
         </div>
 
-        <div id="chart-legend" class="legend">
-          <span class="legend-raise">Raise (Default)</span>
-          <span class="legend-limp">Limp Marginal</span>
-          <span class="legend-fold">Fold</span>
-          <span class="legend-shove">Raise (Strong) / Shove</span>
+        <div id="tab-push-fold" class="tab-content">
+            <h2>Push/Fold Helper (Simplified)</h2>
+            
+            <div class="range-controls">
+                <div class="form-group">
+                    <label for="push-format">Format</label>
+                    <select id="push-format" class="form-control">
+                        <option value="9max">9-Max</option>
+                        <option value="6max">6-Max</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="push-stack">My Stack (BB)</label>
+                    <input type="number" id="push-stack" class="form-control" placeholder="เช่น 12BB" min="1" max="20">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Position (Open Shove)</label>
+                <select id="push-position-9max" class="form-control position-select">
+                    <option value="utg">UTG</option>
+                    <option value="utg1">UTG+1</option>
+                    <option value="mp">MP</option>
+                    <option value="lj">LJ</option>
+                    <option value="hj">HJ</option>
+                    <option value="co">CO</option>
+                    <option value="btn">BTN</option>
+                    <option value="sb">SB</option>
+                </select>
+                <select id="push-position-6max" class="form-control position-select hidden">
+                    <option value="utg">UTG</option>
+                    <option value="mp">MP</option>
+                    <option value="co">CO</option>
+                    <option value="btn">BTN</option>
+                    <option value="sb">SB</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="push-action">Action Type</label>
+                <select id="push-action" class="form-control">
+                    <option value="open-shove">Open Shove (เรา All-in คนแรก)</option>
+                    <option value="3bet-shove">3-Bet Shove (มีคน Raise มาก่อน)</option>
+                </select>
+            </div>
+            <button id="push-fold-btn" class="btn">คำนวณ Range </button>
+
+            <div id="push-fold-result" class="result-box">
+                </div>
         </div>
 
-        <div id="range-chart-container">
-          <h3 id="chart-title">Range: Deep (80bb+) - UTG</h3>
-          <table id="range-grid" class="range-table"></table>
-        </div>
-      </div>
+        <div id="tab-outs" class="tab-content">
+            <h2>Draw Equity Calculator </h2>
+            <p>ป้อนจำนวน Outs ของคุณ (นับไพ่ที่รอ) เพื่อคำนวณเปอร์เซ็นต์ที่จะติด (Equity) ของคุณ</p>
 
-      <div id="tab-push-fold" class="tab-content">
-        <h2>Push/Fold Helper (Simplified)</h2>
-        <div class="form-group">
-          <label for="push-stack">My Stack (BB)</label>
-          <input
-            type="number"
-            id="push-stack"
-            class="form-control"
-            placeholder="เช่น 12bb"
-            min="1"
-            max="20"
-          />
-        </div>
-        <div class="form-group">
-          <label for="push-position">My Position</label>
-          <select id="push-position" class="form-control">
-            <option value="utg">UTG</option>
-            <option value="utg1">UTG+1</option>
-            <option value="mp">MP</option>
-            <option value="lj">LJ</option>
-            <option value="hj">HJ</option>
-            <option value="co">CO</option>
-            <option value="btn">BTN</option>
-            <option value="sb">SB</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="push-action">Action Type</label>
-          <select id="push-action" class="form-control">
-            <option value="open-shove">Open Shove (All-in คนแรก)</option>
-            <option value="3bet-shove">3-Bet Shove (มีคน Raise มาก่อน)</option>
-          </select>
-        </div>
-        <button id="push-fold-btn" class="btn">คำนวณ Range </button>
+            <div class="form-group">
+                <label for="outs-count">คุณมีกี่ Outs?</label>
+                <input type="number" id="outs-count" class="form-control" placeholder="เช่น 9 (สำหรับ Flush Draw)">
+            </div>
+            <div class="form-group">
+                <label for="outs-street">คุณอยู่ที่ Street ไหน?</label>
+                <select id="outs-street" class="form-control">
+                    <option value="flop">อยู่หน้า Flop (รอดู Turn และ River)</option>
+                    <option value="turn">อยู่หน้า Turn (รอดู River)</option>
+                </select>
+            </div>
+            <button id="outs-calc-btn" class="btn">คำนวณ Equity (เปอร์เซ็นต์ติด)</button>
 
-        <div id="push-fold-result" class="result-box"></div>
-      </div>
-    </div>
-    <script src="script.js"></script>
-  </body>
+            <div id="outs-result" class="result-box">
+                </div>
+
+            <div class="outs-guide">
+                <h3>คู่มือการนับ Outs (ที่พบบ่อย)</h3>
+                <ul>
+                    <li><strong>Flush Draw (รอสี):</strong> 9 Outs</li>
+                    <li><strong>Open-end Straight Draw (รอ 2 ตัว หัวท้าย):</strong> 8 Outs</li>
+                    <li><strong>Pair + Flush Draw:</strong> 15 Outs (9+6)</li>
+                    <li><strong>Gutshot Straight Draw (รอ 1 ตัว):</strong> 4 Outs</li>
+                    <li><strong>2 Overcards (ไพ่สูง 2 ใบ):</strong> 6 Outs (เพื่อติดคู่)</li>
+                    <li><strong>Pocket Pair (เพื่อติด Set):</strong> 2 Outs</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div><script src="script.js"></script>
+</body>
 </html>
