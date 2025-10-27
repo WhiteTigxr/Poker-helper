@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tournament Poker Charts</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Tournament Poker Charts</h1>
+      </header>
+
+      <div class="warning-box"><strong>Credit by:</strong> Litice <br /></div>
+
+      <nav class="tab-nav">
+        <button class="tab-link active" data-tab="tab-charts">
+          Range Charts (RFI)
+        </button>
+        <button class="tab-link" data-tab="tab-push-fold">
+          Push/Fold Helper
+        </button>
+      </nav>
+
+      <div id="tab-charts" class="tab-content active">
+        <h2>9-Max Range Charts (Raise First In)</h2>
+
+        <div class="range-controls">
+          <div class="form-group">
+            <label for="chart-stage">Stage (Stack Size)</label>
+            <select id="chart-stage" class="form-control">
+              <option value="deep">Deep ( 80bb+ )</option>
+              <option value="middle">Middle ( <60bb )</option>
+              <option value="late">Late ( <40bb )</option>
+              <option value="low">Low ( <25bb )</option>
+              <option value="pushfold">Push/Fold ( <15bb )</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="chart-position">Position</label>
+            <select id="chart-position" class="form-control">
+              <option value="utg">UTG</option>
+              <option value="utg1">UTG+1</option>
+              <option value="mp">MP</option>
+              <option value="lj">LJ</option>
+              <option value="hj">HJ</option>
+              <option value="co">CO</option>
+              <option value="btn">BTN</option>
+              <option value="sb">SB</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="chart-legend" class="legend">
+          <span class="legend-raise">Raise (Default)</span>
+          <span class="legend-limp">Limp Marginal</span>
+          <span class="legend-fold">Fold</span>
+          <span class="legend-shove">Raise (Strong) / Shove</span>
+        </div>
+
+        <div id="range-chart-container">
+          <h3 id="chart-title">Range: Deep (80bb+) - UTG</h3>
+          <table id="range-grid" class="range-table"></table>
+        </div>
+      </div>
+
+      <div id="tab-push-fold" class="tab-content">
+        <h2>Push/Fold Helper (Simplified)</h2>
+        <div class="form-group">
+          <label for="push-stack">My Stack (BB)</label>
+          <input
+            type="number"
+            id="push-stack"
+            class="form-control"
+            placeholder="เช่น 12bb"
+            min="1"
+            max="20"
+          />
+        </div>
+        <div class="form-group">
+          <label for="push-position">My Position</label>
+          <select id="push-position" class="form-control">
+            <option value="utg">UTG</option>
+            <option value="utg1">UTG+1</option>
+            <option value="mp">MP</option>
+            <option value="lj">LJ</option>
+            <option value="hj">HJ</option>
+            <option value="co">CO</option>
+            <option value="btn">BTN</option>
+            <option value="sb">SB</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="push-action">Action Type</label>
+          <select id="push-action" class="form-control">
+            <option value="open-shove">Open Shove (All-in คนแรก)</option>
+            <option value="3bet-shove">3-Bet Shove (มีคน Raise มาก่อน)</option>
+          </select>
+        </div>
+        <button id="push-fold-btn" class="btn">คำนวณ Range </button>
+
+        <div id="push-fold-result" class="result-box"></div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
